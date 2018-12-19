@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  color: #635f5f;
+  /* color: #635f5f;*/
 }
 
 .App-link {
@@ -29,11 +29,3 @@ button:hover {
   background-color: #a312e9;
 }*/
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
