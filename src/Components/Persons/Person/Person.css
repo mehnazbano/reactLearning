@@ -1,3 +1,15 @@
 .h3 {
   color: #6378d5;
 }
+
+.section_body {
+  border: 1px solid rgb(122, 122, 133);
+  width: 30%;
+  margin-left: 35%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  @media (min-width: 200px): {
+    width: 400px;
+  }
+}

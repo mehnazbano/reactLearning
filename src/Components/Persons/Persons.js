@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Person from './Person/Person'
 
-class Persons extends Component {
+class Persons extends PureComponent {
   constructor(props) {
     super(props)
     console.log("[Persons.js] constructor")
@@ -15,12 +15,14 @@ class Persons extends Component {
     console.log("[Persons.js] componentDidMount")
   }
 
-  componentShouldReceiveProps(nextProps){
-    console.log("[Persons.js] componentShouldReceiveProps")
-  }
+  // componentShouldReceiveProps(nextProps){
+  //   console.log("[Persons.js] componentShouldReceiveProps")
+  // }
 
   shouldComponentUpdate(nextProps, nextState){
     console.log("[Persons.js] shouldComponentUpdate")
+    console.log("nextProps.persons")
+    console.log(this.props.persons)
     return true
   }
 

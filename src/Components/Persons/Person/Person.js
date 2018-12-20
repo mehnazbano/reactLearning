@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import styles from './Person.css'
+import styles from './Person.css';
+import withClass from '../../../HOC/withClass';
+import Aux from '../../../HOC/Aux';
 
 class Person extends Component {
   constructor(props) {
@@ -15,14 +17,14 @@ class Person extends Component {
     console.log("[Person.js] componentDidMount")
   }
 
-  componentShouldReceiveProps(nextProps){
-    console.log("[Person.js] componentShouldReceiveProps")
-  }
+  // componentWillReceiveProps(nextProps){
+  //   console.log("[Person.js] componentWillReceiveProps")
+  // }
 
-  shouldComponentUpdate(nextProps, nextState){
-    console.log("[Person.js] shouldComponentUpdate")
-    return true
-  }
+  // shouldComponentUpdate(nextProps, nextState){
+  //   console.log("[Person.js] shouldComponentUpdate")
+  //   return true
+  // }
 
   componentWillUpdate(){
     console.log("[Person.js] componentWillUpdate")
@@ -50,12 +52,12 @@ class Person extends Component {
       color: '#474845'
     }
     return (
-      <div style={section_style} >
+      <Aux>
         <h3 className={styles.h3} onClick={this.props.click} >Welcome {this.props.name} - {this.props.designation}.</h3>
         <input type="text" style={input_style} onChange={this.props.changed} defaultValue={this.props.designation} />
-      </div>
+      </Aux>
     )
   }
 }
 
-export default Person;
+export default withClass(Person, styles.section_body );

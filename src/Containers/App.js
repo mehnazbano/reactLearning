@@ -1,13 +1,26 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 //import Radium, { StyleRoot } from 'radium';
 import classes from './App.css';
 import Persons from '../Components/Persons/Persons';
 import Cockpit from '../Components/Cockpit/Cockpit';
+import Aux from '../HOC/Aux'
+import withClass from '../HOC/withClass'
 
-class App extends Component {
+class App extends PureComponent {
   constructor(props) {
     super(props)
     console.log("[App.js] constructor")
+    this.state = {
+      persons: [
+        { name: "Mehnaz", designation: "Full Stack Developer", id: 1},
+        { name: "Mazid", designation: "Branch Manager", id: 2},
+        { name: "Sahin", designation: "House Wife", id: 3},
+        { name: "Gulnaz", designation: "House Wife", id: 4},
+        { name: "Sabrish", designation: "Designer", id: 5},
+        { name: "Wajid", designation: "JWM", id: 6}
+      ],
+      showPerson: false
+    }
   }
 
   componentWillMount(){
@@ -18,14 +31,16 @@ class App extends Component {
     console.log("[App.js] componentDidMount")
   }
 
-  componentShouldReceiveProps(nextProps){
-    console.log("[App.js] componentShouldReceiveProps")
+  componentWillReceiveProps(nextProps){
+    console.log("[App.js] componentWillReceiveProps")
   }
-
-  shouldComponentUpdate(nextProps, nextState){
-    console.log("[App.js] shouldComponentUpdate")
-    return true
-  }
+  
+  // shouldComponentUpdate(nextProps, nextState){
+  //   console.log("[App.js] shouldComponentUpdate")
+  //   return nextState.persons !== this.state.persons ||
+  //     nextState.showPerson !== this.state.showPerson;
+  //   // return true;
+  // }
 
   componentWillUpdate(){
     console.log("[App.js] componentWillUpdate")
@@ -35,35 +50,24 @@ class App extends Component {
     console.log("[App.js] componentDidUpdate")
   }
 
-  state = {
-	  persons: [
-      { name: "Mehnaz", designation: "Full Stack Developer", id: 1},
-      { name: "Mazid", designation: "Branch Manager", id: 2},
-		  { name: "Sahin", designation: "House Wife", id: 3},
-      { name: "Gulnaz", designation: "House Wife", id: 4},
-      { name: "Sabrish", designation: "Designer", id: 5},
-		  { name: "Wajid", designation: "JWM", id: 6}
-	 ],
-   showPerson: false
-	}
 
   swapPersonHandler = (newDesignation) => {
     this.setState({persons: [{name: "Mr. Mazid Ali", designation: newDesignation },{name: "Mr. Wajid Ali", designation: "JWM in Opto Electronics factory"} ]})
   }
 
   designationChangeHandler = (event, id ) => {
-    var persons = this.state.persons
+    const persons = [...this.state.persons];
     persons[id].designation = event.target.value
     this.setState({persons: persons })
   }
 
   togglePersonsHandler = () => {
-    var showPerson = this.state.showPerson
+    const showPerson = this.state.showPerson;
     this.setState({showPerson: !showPerson })
   }
 
   deletePersonHandler = (id) => {
-    var persons = this.state.persons
+    const persons = [...this.state.persons];
     persons.splice(id,1)
     this.setState({persons: persons })
   }
@@ -98,7 +102,8 @@ class App extends Component {
         style[':hover'] = { backgroundColor: '#8087e9'}
       }
     return (
-      <div className={classes.App}>
+      <Aux>
+        <button onClick={() => this.setState({showPerson: true }) }>Show Persons</button>
         <Cockpit style={style} title={this.props.title} click={this.togglePersonsHandler} show={this.state.showPerson} />
         {persons}
         {
@@ -115,8 +120,8 @@ class App extends Component {
          <Common name={this.state.person[1].name} designation={this.state.person[1].designation} click={this.swapPersonHandler.bind(this, "Family person")} />
         */
         }
-      </div>
+      </Aux>
     );
   }
 }
-export default App;
+export default withClass(App, classes.App );
