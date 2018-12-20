@@ -6,6 +6,9 @@ import Cockpit from '../Components/Cockpit/Cockpit';
 import Aux from '../HOC/Aux'
 import withClass from '../HOC/withClass'
 
+// Using context API for Global settings
+export const AuthContext = React.createContext(false);
+
 class App extends PureComponent {
   constructor(props) {
     super(props)
@@ -19,8 +22,10 @@ class App extends PureComponent {
         { name: "Sabrish", designation: "Designer", id: 5},
         { name: "Wajid", designation: "JWM", id: 6}
       ],
-      showPerson: false
+      showPerson: false,
+      toggleCount: 0
     }
+    this.isAuthenticated = false
   }
 
   componentWillMount(){
@@ -63,7 +68,12 @@ class App extends PureComponent {
 
   togglePersonsHandler = () => {
     const showPerson = this.state.showPerson;
-    this.setState({showPerson: !showPerson })
+    this.setState( (prevState, props) => {
+      return {
+        showPerson: !showPerson,
+        toggleCount: prevState.toggleCount + 1
+      }
+    })
   }
 
   deletePersonHandler = (id) => {
@@ -104,8 +114,11 @@ class App extends PureComponent {
     return (
       <Aux>
         <button onClick={() => this.setState({showPerson: true }) }>Show Persons</button>
+        <button onClick={() => this.setState({isAuthenticated: true})}>Log In</button>
         <Cockpit style={style} title={this.props.title} click={this.togglePersonsHandler} show={this.state.showPerson} />
-        {persons}
+        <AuthContext.Provider value={this.state.isAuthenticated}>
+          {persons}
+        </AuthContext.Provider>
         {
         /*
           this.state.person.map((data,index) => {

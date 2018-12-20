@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import Person from './Person/Person'
+// import PropTypes from 'prop-types'
 
 class Persons extends PureComponent {
   constructor(props) {
@@ -38,7 +39,7 @@ class Persons extends PureComponent {
     console.log("[Persons.js] render")
     return (
       this.props.persons.map( (person, index) =>
-      	<Person name={person.name} key={person.id} designation={person.designation} click={(event) => this.props.click(index)} changed={(event) => this.props.changed(event, index)} />
+      	<Person name={person.name} position={index} key={person.id} designation={person.designation} click={(event) => this.props.click(index)} changed={(event) => this.props.changed(event, index)} />
       )
     )
   }

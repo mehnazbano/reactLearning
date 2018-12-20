@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import styles from './Person.css';
 import withClass from '../../../HOC/withClass';
 import Aux from '../../../HOC/Aux';
+import PropTypes from 'prop-types'
+import {AuthContext} from '../../../Containers/App'
 
 class Person extends Component {
   constructor(props) {
     super(props)
     console.log("[Person.js] constructor")
+    this.inputElement = React.createRef();
   }
 
   componentWillMount(){
@@ -15,6 +18,9 @@ class Person extends Component {
 
   componentDidMount(){
     console.log("[Person.js] componentDidMount")
+    if (this.props.position == 0) {
+      this.inputElement.current.focus()
+    }
   }
 
   // componentWillReceiveProps(nextProps){
@@ -53,11 +59,21 @@ class Person extends Component {
     }
     return (
       <Aux>
+        <AuthContext.Consumer>
+          { (auth) => auth ? <p>I am Authenticated</p> : null }
+        </AuthContext.Consumer>
         <h3 className={styles.h3} onClick={this.props.click} >Welcome {this.props.name} - {this.props.designation}.</h3>
-        <input type="text" style={input_style} onChange={this.props.changed} defaultValue={this.props.designation} />
+        <input type="text" ref={this.inputElement} style={input_style} onChange={this.props.changed} defaultValue={this.props.designation} />
       </Aux>
     )
   }
+}
+
+Person.propTypes = {
+  name: PropTypes.string,
+  designation: PropTypes.string,
+  click: PropTypes.func,
+  changed: PropTypes.func
 }
 
 export default withClass(Person, styles.section_body );
